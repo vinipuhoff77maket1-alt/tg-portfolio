@@ -1,0 +1,6 @@
+{
+  "name": "Motion Designer Portfolio",
+  "description": "A creative, friendly, and playful Telegram Mini App portfolio for a professional motion designer, featuring handmade doodles, 3D colorful cards, and video previews.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
