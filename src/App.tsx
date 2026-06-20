@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
 import userAvatar from './assets/images/user_avatar_1781938584172.jpg';
+// @ts-ignore
+import aeIcon from './assets/images/ae_icon_1781939305386.jpg';
+// @ts-ignore
+import clapperboardIcon from './assets/images/clapperboard_icon_1781939320101.jpg';
+// @ts-ignore
+import chainLinkIcon from './assets/images/chain_link_icon_1781939330221.jpg';
+// @ts-ignore
+import logoWireframeIcon from './assets/images/logo_wireframe_icon_1781939342636.jpg';
 import {
   Menu,
   ChevronRight,
@@ -319,15 +327,15 @@ export default function App() {
                   {/* Subtle vector background grid */}
                   <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 15%, transparent 15%)', backgroundSize: '10px 10px' }} />
                   
-                  {/* AE Badge styled beautifully */}
+                  {/* 3D Ae image icon */}
                   <div className="h-20 w-20 mx-auto mt-2 flex items-center justify-center relative">
-                    <div className="w-14 h-14 bg-[#1E1B29] border-2 border-[#A78BFA] rounded-xl shadow-lg flex flex-col items-center justify-center animate-float" style={{ animationDuration: '3.5s' }}>
-                      <span className="text-[10px] text-[#A78BFA] font-mono leading-none">AE</span>
-                      <span className="text-[20px] text-white font-extrabold leading-none font-sans mt-0.5">Ae</span>
-                    </div>
-                    {/* Tiny orbit shapes */}
-                    <div className="absolute top-2 right-2 w-3.5 h-3.5 bg-[#66C2FF] rounded-full animate-wiggle" />
-                    <div className="absolute bottom-2 left-1 w-2.5 h-2.5 bg-[#FF66CC] rounded-full animate-pulse-subtle" />
+                    <img 
+                      src={aeIcon} 
+                      alt="Ae Icon" 
+                      className="w-16 h-16 object-contain animate-float" 
+                      style={{ animationDuration: '3.5s' }}
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
 
                   <h3 className="font-sans font-extrabold text-sm tracking-tight leading-tight mt-4 pr-4">
@@ -349,15 +357,14 @@ export default function App() {
                   {/* Subtle vector grid */}
                   <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 15%, transparent 15%)', backgroundSize: '12px 12px' }} />
 
-                  {/* 3D Wireframe Logo icon representation */}
+                  {/* 3D LOGO Wireframe image icon */}
                   <div className="h-20 w-20 mx-auto mt-2 flex items-center justify-center relative">
-                    <div className="w-14 h-14 bg-amber-500 border-2 border-[#3A322F] rounded-xl flex items-center justify-center font-extrabold font-mono text-center text-[10px] text-white drop-shadow-md animate-float-slow">
-                      <div className="border border-white/40 p-1 flex items-center justify-center w-full h-full rounded-lg">
-                        LOGO
-                      </div>
-                    </div>
-                    {/* Ring highlight element */}
-                    <div className="absolute inset-0 border border-[#3A322F]/30 rounded-full scale-75 animate-pulse-subtle" />
+                    <img 
+                      src={logoWireframeIcon} 
+                      alt="Logo Icon" 
+                      className="w-18 h-18 object-contain animate-float-slow" 
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
 
                   <h3 className="font-sans font-extrabold text-sm tracking-tight leading-tight mt-4 pr-4">
@@ -378,17 +385,15 @@ export default function App() {
                 >
                   <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'linear-gradient(45deg, #fff 25%, transparent 25%)', backgroundSize: '15px 15px' }} />
 
-                  {/* 3D Movie Clapperboard */}
+                  {/* 3D Clapperboard image icon */}
                   <div className="h-20 w-20 mx-auto mt-2 flex items-center justify-center relative">
-                    <div className="w-14 h-12 bg-slate-900 border-2 border-[#3A322F] rounded-lg relative overflow-hidden drop-shadow-md animate-float" style={{ animationDuration: '4.5s' }}>
-                      {/* Slates */}
-                      <div className="bg-[#FAF8F5] text-slate-900 h-4 flex items-center justify-center font-mono text-[8px] border-b-2 border-[#3A322F] font-bold select-none py-0.5">
-                        🎬 SLATE_8
-                      </div>
-                      <div className="w-full h-full bg-slate-900 flex justify-center items-center font-mono text-[10px] text-white">
-                        CLIP
-                      </div>
-                    </div>
+                    <img 
+                      src={clapperboardIcon} 
+                      alt="Clapperboard Icon" 
+                      className="w-16 h-16 object-contain animate-float" 
+                      style={{ animationDuration: '4.5s' }}
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
 
                   <h3 className="font-sans font-extrabold text-sm tracking-tight leading-tight mt-4 pr-4">
@@ -409,10 +414,14 @@ export default function App() {
                 >
                   <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'radial-gradient(ellipse, #000 12%, transparent 12%)', backgroundSize: '14px 14px' }} />
 
-                  {/* 3D Chain link structure */}
+                  {/* 3D Chain link image icon */}
                   <div className="h-20 w-20 mx-auto mt-2 flex items-center justify-center relative">
-                    <div className="w-10 h-10 border-4 border-[#1E3A1E] rounded-full absolute rotate-45 transform translate-x-1.5 translate-y-1.5 animate-bounce shadow-sm bg-white/20" />
-                    <div className="w-10 h-10 border-4 border-[#1E3A1E] rounded-full absolute -rotate-45 transform -translate-x-1.5 -translate-y-1.5 animate-pulse-subtle bg-emerald-100" />
+                    <img 
+                      src={chainLinkIcon} 
+                      alt="Chain Link Icon" 
+                      className="w-16 h-16 object-contain animate-bounce" 
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
 
                   <h3 className="font-sans font-extrabold text-sm tracking-tight leading-tight mt-4 pr-4">
