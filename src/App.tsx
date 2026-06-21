@@ -28,7 +28,11 @@ import {
   Tv,
   Award,
   Sun,
-  Moon
+  Moon,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import {
   SparkleDoodle,
@@ -53,6 +57,175 @@ import {
   LinkCardItem,
   ProjectItem
 } from './data';
+
+const VIDEO_URLS: Record<string, string> = {
+  'video-01': 'https://cdn.pixabay.com/video/2021/08/17/85375-589665975_tiny.mp4',
+  'video-02': 'https://cdn.pixabay.com/video/2020/09/17/50005-452331584_tiny.mp4',
+  'video-03': 'https://cdn.pixabay.com/video/2024/05/26/213797_tiny.mp4'
+};
+
+interface VideoPreviewProps {
+  projectId: string;
+  isDarkMode: boolean;
+}
+
+function VideoPreview({ projectId, isDarkMode }: VideoPreviewProps) {
+  const videoUrl = VIDEO_URLS[projectId] || '';
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    
+    if (isPlaying) {
+      video.play().catch(() => {
+        setIsPlaying(false);
+      });
+    } else {
+      video.pause();
+    }
+  }, [isPlaying]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = isMuted;
+  }, [isMuted]);
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      setDuration(videoRef.current.duration || 10);
+    }
+  };
+
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMuted(!isMuted);
+  };
+
+  const formatTime = (secs: number) => {
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = Math.floor(secs % 60).toString().padStart(2, '0');
+    const ms = Math.floor((secs % 1) * 100).toString().padStart(2, '0');
+    return `${m}:${s}:${ms}`;
+  };
+
+  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+  return (
+    <div className={`mt-3 relative overflow-hidden rounded-xl border-2 ${
+      isDarkMode ? 'border-[#7C3AED] bg-black' : 'border-[#4A3E39] bg-stone-950'
+    } aspect-video group shadow-[2px_2px_0px_0px_rgba(0,0,0,0.15)] flex flex-col justify-between`}>
+      {/* Video element */}
+      {videoUrl ? (
+        <video
+          ref={videoRef}
+          src={videoUrl}
+          loop
+          muted={isMuted}
+          playsInline
+          autoPlay
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+          className="absolute inset-0 w-full h-full object-cover select-none"
+        />
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center text-white/50 text-xs font-mono">
+          [Сбой видео]
+        </div>
+      )}
+
+      {/* Viewfinder overlay grid & graphics */}
+      <div className="absolute inset-0 pointer-events-none flex flex-col justify-between p-2 select-none z-10">
+        {/* Top bar indicators */}
+        <div className="flex items-center justify-between text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] font-mono text-[8px] tracking-wider uppercase">
+          <div className="flex items-center gap-1 bg-black/55 px-1.5 py-0.5 rounded backdrop-blur-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse" />
+            <span>● Z-REC</span>
+          </div>
+          <div className="bg-black/55 px-1.5 py-0.5 rounded backdrop-blur-xs text-[#E28743] font-bold">
+            1080P FHD
+          </div>
+        </div>
+
+        {/* Center reticle */}
+        <div className="absolute inset-0 flex items-center justify-center text-white/20">
+          <div className="relative w-6 h-6 flex items-center justify-center">
+            <div className="absolute w-2.5 h-[1px] bg-white/35 top-1/2 left-0 -translate-y-1/2" />
+            <div className="absolute w-2.5 h-[1px] bg-white/35 top-1/2 right-0 -translate-y-1/2" />
+            <div className="absolute w-[1px] h-2.5 bg-white/35 top-0 left-1/2 -translate-x-1/2" />
+            <div className="absolute w-[1px] h-2.5 bg-white/35 bottom-0 left-1/2 -translate-x-1/2" />
+          </div>
+        </div>
+
+        {/* Framing corners crop marks */}
+        <div className="absolute top-1.5 left-1.5 w-2.5 h-2.5 border-t-2 border-l-2 border-white/35" />
+        <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 border-t-2 border-r-2 border-white/35" />
+        <div className="absolute bottom-2.5 left-1.5 w-2.5 h-2.5 border-b-2 border-l-2 border-white/35" />
+        <div className="absolute bottom-2.5 right-1.5 w-2.5 h-2.5 border-b-2 border-r-2 border-white/35" />
+
+        {/* Bottom stats overlay bar */}
+        <div className="mt-auto flex items-center justify-between text-[7px] text-white/85 drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] font-mono mt-auto pt-2">
+          <div className="flex items-center gap-1.5 bg-black/35 px-1 py-0.5 rounded">
+            <span className="opacity-75">STBY</span>
+            <span>TC {formatTime(currentTime)}</span>
+          </div>
+          <div className="flex items-center gap-1.5 bg-black/35 px-1 py-0.5 rounded">
+            <span>LR [▮▮▯]</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Premiere Pro-inspired Playback sequence progress bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-stone-700/50 pointer-events-none z-10">
+        <div
+          className="h-full bg-[#E28743] transition-all duration-75"
+          style={{ width: `${progressPercent}%` }}
+        />
+      </div>
+
+      {/* Play/Pause & Audio interactive controls (appear on hover nicely) */}
+      <div className="absolute inset-x-0 bottom-4 px-2.5 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20 pointer-events-none">
+        <div className="flex items-center gap-1 pointer-events-auto">
+          <button
+            onClick={togglePlay}
+            className="w-6 h-6 rounded bg-black/75 hover:bg-black/95 text-white flex items-center justify-center transition-all scale-95 hover:scale-100 cursor-pointer border border-white/10 shadow-md"
+            title={isPlaying ? "Пауза" : "Воспроизвести"}
+          >
+            {isPlaying ? <Pause className="w-2.5 h-2.5 fill-white" /> : <Play className="w-2.5 h-2.5 fill-white ml-[1px]" />}
+          </button>
+          
+          <button
+            onClick={toggleMute}
+            className="w-6 h-6 rounded bg-black/75 hover:bg-black/95 text-white flex items-center justify-center transition-all scale-95 hover:scale-100 cursor-pointer border border-white/10 shadow-md"
+            title={isMuted ? "Включить звук" : "Выключить звук"}
+          >
+            {isMuted ? <VolumeX className="w-2.5 h-2.5" /> : <Volume2 className="w-2.5 h-2.5" />}
+          </button>
+        </div>
+
+        <div className="bg-black/75 border border-white/10 shadow-md px-1.5 py-0.5 rounded text-[8px] font-mono font-bold text-white uppercase select-none pointer-events-auto">
+          {projectId === 'video-01' ? 'REEL' : projectId === 'video-02' ? 'TRAVEL' : 'GLITCH'}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 type ViewMode = 'home' | 'shape-animation' | 'logo-animation' | 'video-editing' | 'useful-links';
 
@@ -758,6 +931,8 @@ export default function App() {
                       ⏱ {proj.duration}
                     </span>
                   </div>
+
+                  <VideoPreview projectId={proj.id} isDarkMode={isDarkMode} />
 
                   <h4 className="font-sans font-extrabold text-base text-[#3A322F] mt-2.5 leading-snug">
                     {proj.title}
