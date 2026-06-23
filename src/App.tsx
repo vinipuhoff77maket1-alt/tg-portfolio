@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import userAvatar from './assets/images/user_avatar_1781938584172.jpg';
+import userAvatar from './assets/images/user_avatar.png';
 // @ts-ignore
-import aeIcon from './assets/images/ae_icon_1781939305386.jpg';
+import aeIcon from './assets/images/ae_icon.png';
 // @ts-ignore
-import clapperboardIcon from './assets/images/clapperboard_icon_1781939320101.jpg';
+import clapperboardIcon from './assets/images/clapperboard_icon.png';
 // @ts-ignore
-import chainLinkIcon from './assets/images/chain_link_icon_1781939330221.jpg';
+import chainLinkIcon from './assets/images/chain_link_icon.png';
 // @ts-ignore
-import logoWireframeIcon from './assets/images/logo_wireframe_icon_1781939342636.jpg';
+import logoWireframeIcon from './assets/images/logo_wireframe_icon.png';
 import {
   Menu,
   ChevronRight,
